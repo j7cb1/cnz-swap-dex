@@ -14,19 +14,18 @@ export function SwapDirectionButton({
   flipped,
 }: SwapDirectionButtonProps) {
   return (
-    <div className="relative z-10 flex justify-center h-0">
+    <div className="relative z-10 flex justify-center h-0 my-1">
       <motion.button
         type="button"
         onClick={onClick}
         className={cn(
           'absolute -translate-y-1/2',
           'flex items-center justify-center',
-          'size-10 rounded-full',
-          'bg-card border-2 border-border',
-          'text-muted-foreground',
+          'size-9 rounded-xl',
+          'bg-card/90 border border-white/[0.06]',
+          'text-emerald-400',
           'transition-all duration-200',
-          'hover:border-emerald-600/50 hover:text-emerald-400 hover:bg-card',
-          'hover:shadow-[0_0_12px_rgba(5,150,105,0.15)]',
+          'hover:bg-card hover:text-emerald-300',
           'active:scale-95',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           'cursor-pointer',
@@ -37,7 +36,7 @@ export function SwapDirectionButton({
           animate={{ rotate: flipped ? 180 : 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          <IconArrowDown className="size-5" />
+          <IconArrowDown className="size-4" />
         </motion.div>
       </motion.button>
     </div>

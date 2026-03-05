@@ -1,17 +1,25 @@
 import { z } from 'zod'
 
-// Token from SwapKit API
+// Token from SwapKit API — no .passthrough(), strips extra fields to keep payload lean
 export const tokenSchema = z.object({
   identifier: z.string(),
   chain: z.string(),
-  symbol: z.string(),
-  name: z.string(),
+  ticker: z.string(),
+  name: z.string().optional(),
   decimals: z.number(),
-  logoUrl: z.string().optional(),
+  logoURI: z.string().optional(),
   address: z.string().optional(),
 })
 
 export type Token = z.infer<typeof tokenSchema>
+
+// Provider group wrapping tokens in the /tokens response
+export const tokenProviderSchema = z.object({
+  provider: z.string(),
+  tokens: z.array(tokenSchema),
+}).passthrough()
+
+export type TokenProvider = z.infer<typeof tokenProviderSchema>
 
 // Fee in a quote route
 export const feeSchema = z.object({
@@ -40,6 +48,18 @@ export const swapLegSchema = z.object({
   buyAmount: z.string().optional(),
 }).passthrough()
 
+// Asset metadata returned in quote route
+export const quoteAssetMetaSchema = z.object({
+  asset: z.string(),
+  price: z.number().optional(),
+  image: z.string().optional(),
+}).passthrough()
+
+export const quoteMetaSchema = z.object({
+  assets: z.array(quoteAssetMetaSchema).optional(),
+  tags: z.array(z.string()).optional(),
+}).passthrough()
+
 // Quote route from SwapKit /v3/quote
 export const quoteRouteSchema = z.object({
   routeId: z.string(),
@@ -55,6 +75,7 @@ export const quoteRouteSchema = z.object({
   legs: z.array(swapLegSchema).optional(),
   warnings: z.array(z.any()).optional(),
   tags: z.array(z.string()).optional(),
+  meta: quoteMetaSchema.optional(),
 }).passthrough()
 
 export type QuoteRoute = z.infer<typeof quoteRouteSchema>
@@ -68,6 +89,25 @@ export const quoteResponseSchema = z.object({
 })
 
 export type QuoteResponse = z.infer<typeof quoteResponseSchema>
+
+// EVM transaction object returned by SwapKit /v3/swap
+export const evmTxSchema = z.object({
+  to: z.string(),
+  data: z.string().optional(),
+  value: z.string().optional(),
+  gas: z.string().optional(),
+  gasPrice: z.string().optional(),
+}).passthrough()
+
+// Swap execution response from /v3/swap
+export const swapResponseSchema = z.object({
+  tx: evmTxSchema,
+  txType: z.string(),
+  targetAddress: z.string().optional(),
+  inboundAddress: z.string().optional(),
+})
+
+export type SwapResponse = z.infer<typeof swapResponseSchema>
 
 // Swap request parameters
 export const swapParamsSchema = z.object({

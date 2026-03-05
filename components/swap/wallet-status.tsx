@@ -1,20 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useDynamicContext, DynamicWidget } from '@dynamic-labs/sdk-react-core'
+import { useSyncExternalStore } from 'react'
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core'
+
+const subscribe = () => () => {}
+const getSnapshot = () => true
+const getServerSnapshot = () => false
 
 export function WalletStatus() {
   const { primaryWallet } = useDynamicContext()
-  const [mounted, setMounted] = useState(false)
+  const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  if (!primaryWallet) {
-    return <DynamicWidget />
+  if (!mounted || !primaryWallet) {
+    return null
   }
 
   return (
