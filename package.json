@@ -1,7 +1,7 @@
 {
-  "name": "next-template",
+  "name": "cnz-swap-dex",
   "version": "1.0.0",
-  "description": "Next.js base template with authentication, clean architecture, and AI-friendly documentation",
+  "description": "Cryptocurrency NZ decentralized swap exchange",
   "private": true,
   "scripts": {
     "dev": "next dev",
