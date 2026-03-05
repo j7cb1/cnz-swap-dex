@@ -16,9 +16,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+
 export const metadata: Metadata = {
-  title: "Cryptocurrency NZ | Swap",
-  description: "Swap tokens instantly on Cryptocurrency NZ",
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'Cryptocurrency NZ | Swap',
+    template: '%s | Cryptocurrency NZ',
+  },
+  description: 'Swap tokens instantly across chains on Cryptocurrency NZ',
+  openGraph: {
+    title: 'Cryptocurrency NZ | Swap',
+    description: 'Swap tokens instantly across chains on Cryptocurrency NZ',
+    siteName: 'Cryptocurrency NZ',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cryptocurrency NZ | Swap',
+    description: 'Swap tokens instantly across chains on Cryptocurrency NZ',
+  },
 };
 
 export default function RootLayout({
