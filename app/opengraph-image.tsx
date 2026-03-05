@@ -36,24 +36,14 @@ export default function OgImage() {
           fontFamily: 'system-ui, -apple-system, sans-serif',
         }}
       >
-        {/* Noise texture (SVG feTurbulence matching our page) */}
-        <svg
-          width="1200"
-          height="630"
-          style={{ position: 'absolute', top: 0, left: 0, opacity: 0.06 }}
-        >
-          <filter id="n">
-            <feTurbulence type="fractalNoise" baseFrequency="0.45" numOctaves="2" stitchTiles="stitch" />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-          <rect width="1200" height="630" filter="url(#n)" />
-        </svg>
-
         {/* Vignette */}
         <div
           style={{
             position: 'absolute',
-            inset: '0',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             background:
               'radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.6) 100%)',
           }}
